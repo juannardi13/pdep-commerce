@@ -1,8 +1,5 @@
 type Producto = (String, Int)
 
-precioTotal :: Producto -> Int -> Int -> Int -> Int
---precioTotal unProducto cantidadDeProductos descuentoDelProducto costoDeEnvio = (aplicarCostoDeEnvio costoDeEnvio) . (* cantidadDeProductos) . (aplicarDescuento descuentoDelProducto) $ unProducto
-
 productoDeElite :: Producto -> Bool
 productoDeElite unProducto = (productoDeLujo unProducto) && (productoCodiciado unProducto) && (not . productoCorriente $ unProducto)
 
@@ -28,19 +25,22 @@ productoCodiciado :: Producto -> Bool
 productoCodiciado (nombreProducto, _) = palabraCodiciada nombreProducto
 
 palabraCodiciada :: String -> Bool
-palabraCodiciada unaPalabra = unaPalabra > 10
+palabraCodiciada unaPalabra = length unaPalabra > 10
 
 productoCorriente :: Producto -> Bool
 productoCorriente (nombreProducto, _) = empiezaConVocal nombreProducto
 
---empiezaConVocal :: String -> Bool
-empiezaConVocal unaPalabra = any ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] (head unaPalabra)
+empiezaConVocal :: String -> Bool
+empiezaConVocal unaPalabra = esVocal (head unaPalabra)
+
+esVocal :: Char -> Bool
+esVocal unCaracter = elem unCaracter "aeiouAEIOU"
 
 productoXL :: Producto -> Producto
 productoXL (nombreProducto, precioProducto) = (nombreProducto ++ "XL", precioProducto)
 
---versionBarata :: Producto -> Producto
-versionBarata (nombreProducto, precioProducto) = (reverse . descodiciarProducto $ nombreProducto, precioProducto)
+versionBarata :: Producto -> Producto
+versionBarata (nombreProducto, precioProducto) = (reverse . fst . descodiciarProducto $ (nombreProducto, precioProducto), precioProducto)
 
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
