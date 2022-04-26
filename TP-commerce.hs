@@ -1,5 +1,8 @@
 type Producto = (String, Int)
 
+precioFinal :: Producto -> Int -> Int -> Int -> Int
+precioFinal unProducto unaCantidad unDescuento costoDeEnvio =
+
 productoDeElite :: Producto -> Bool
 productoDeElite unProducto = (productoDeLujo unProducto) && (productoCodiciado unProducto) && (not . productoCorriente $ unProducto)
 
