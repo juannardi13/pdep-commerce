@@ -1,7 +1,13 @@
 type Producto = (String, Int)
 
 precioFinal :: Producto -> Int -> Int -> Int -> Int
-precioFinal unProducto unaCantidad unDescuento costoDeEnvio =
+precioFinal unProducto unaCantidad unDescuento costoDeEnvio = (precioDelProducto) . (aplicarCostoDeEnvio costoDeEnvio) . (precioPorCantidad unaCantidad) . (aplicarDescuento unDescuento) $ unProducto
+
+precioPorCantidad :: Int -> Producto -> Producto
+precioPorCantidad unaCantidad (nombreProducto, precioProducto) = (nombreProducto, unaCantidad * precioProducto)
+
+precioDelProducto :: Producto -> Int
+precioDelProducto unProducto = snd unProducto
 
 productoDeElite :: Producto -> Bool
 productoDeElite unProducto = (productoDeLujo unProducto) && (productoCodiciado unProducto) && (not . productoCorriente $ unProducto)
